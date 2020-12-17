@@ -7,7 +7,39 @@ class FormularioTransferencia extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text('Criando transferencia')),
-        body: Text('teste'));
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                style: TextStyle(
+                    fontSize: 24.0,
+                    color: Colors.amberAccent,
+                    fontStyle: FontStyle.italic),
+                decoration: InputDecoration(
+                  labelText: 'Número da Conta',
+                  hintText: '0000',
+                ),
+                keyboardType: TextInputType.number,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  icon: Icon(Icons.monetization_on),
+                  labelText: 'Valor',
+                  hintText: '0.00',
+                ),
+                keyboardType: TextInputType.number,
+              ),
+            ),
+            RaisedButton(
+              onPressed: null,
+              child: Text('Confirmar'),
+            )
+          ],
+        ));
   }
 }
 
@@ -22,9 +54,7 @@ class ByteBankApp extends StatelessWidget {
   }
 }
 
-
 class ListTransferencia extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,9 +74,7 @@ class ListTransferencia extends StatelessWidget {
 }
 
 class ItemTransferencia extends StatelessWidget {
-
   final Transferencia _transferencia;
-
 
   ItemTransferencia(this._transferencia);
 
@@ -54,17 +82,14 @@ class ItemTransferencia extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
         child: ListTile(
-          leading: Icon(Icons.monetization_on),
-          title: Text(this._transferencia.valor.toString()),
-          subtitle: Text(this._transferencia.numeroConta.toString()),
-        )
-    );
+      leading: Icon(Icons.monetization_on),
+      title: Text(this._transferencia.valor.toString()),
+      subtitle: Text(this._transferencia.numeroConta.toString()),
+    ));
   }
-
 }
 
-class Transferencia  {
-
+class Transferencia {
   final double valor;
   final int numeroConta;
 
