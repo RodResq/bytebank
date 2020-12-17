@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 void main() => runApp(ByteBankApp());
 
 class FormularioTransferencia extends StatelessWidget {
+
+  final TextEditingController _controladorCampoNumeroConta = TextEditingController();
+  final TextEditingController _controladorCampoValor = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,6 +16,7 @@ class FormularioTransferencia extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
+                controller: _controladorCampoNumeroConta,
                 style: TextStyle(
                     fontSize: 24.0,
                     color: Colors.amberAccent,
@@ -26,6 +31,7 @@ class FormularioTransferencia extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
+                controller: _controladorCampoValor,
                 decoration: InputDecoration(
                   icon: Icon(Icons.monetization_on),
                   labelText: 'Valor',
@@ -35,7 +41,18 @@ class FormularioTransferencia extends StatelessWidget {
               ),
             ),
             RaisedButton(
-              onPressed: null,
+              onPressed: () {
+                final int numeroConta = int.tryParse(
+                    _controladorCampoNumeroConta.text);
+                final double valor = double.tryParse(
+                    _controladorCampoValor.text);
+
+                if (numeroConta != null && valor != null) {
+                  final Transferencia transferencia = Transferencia(valor, numeroConta);
+                  debugPrint('$transferencia');
+
+                }
+              },
               child: Text('Confirmar'),
             )
           ],
@@ -82,10 +99,10 @@ class ItemTransferencia extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
         child: ListTile(
-      leading: Icon(Icons.monetization_on),
-      title: Text(this._transferencia.valor.toString()),
-      subtitle: Text(this._transferencia.numeroConta.toString()),
-    ));
+          leading: Icon(Icons.monetization_on),
+          title: Text(this._transferencia.valor.toString()),
+          subtitle: Text(this._transferencia.numeroConta.toString()),
+        ));
   }
 }
 
@@ -94,4 +111,9 @@ class Transferencia {
   final int numeroConta;
 
   Transferencia(this.valor, this.numeroConta);
+
+  @override
+  String toString() {
+    return 'Transferencia{valor: $valor, numeroConta: $numeroConta}';
+  }
 }
