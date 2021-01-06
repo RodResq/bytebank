@@ -11,24 +11,26 @@ class FormularioTransferencia extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text('Criando transferencia')),
-        body: Column(
-          children: [
-            Editor(
-              controlador: _controladorCampoNumeroConta,
-              dica: '0000',
-              rotulo: 'Numero da Conta',
-            ),
-            Editor(
-              controlador: _controladorCampoValor,
-              dica: '0.00',
-              rotulo: 'Valor',
-              icone: Icons.monetization_on,
-            ),
-            RaisedButton(
-              onPressed: () => _criaTransferencia(context),
-              child: Text('Confirmar'),
-            )
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Editor(
+                controlador: _controladorCampoNumeroConta,
+                dica: '0000',
+                rotulo: 'Numero da Conta',
+              ),
+              Editor(
+                controlador: _controladorCampoValor,
+                dica: '0.00',
+                rotulo: 'Valor',
+                icone: Icons.monetization_on,
+              ),
+              RaisedButton(
+                onPressed: () => _criaTransferencia(context),
+                child: Text('Confirmar'),
+              )
+            ],
+          ),
         ));
   }
 
@@ -118,9 +120,11 @@ class ListaTransferenciaState extends State<ListTransferencia> {
           future.then((transferenciaRecebida)  {
             debugPrint('Chegou no  then do Future');
             debugPrint('$transferenciaRecebida');
-            setState(() {
-              widget._transferencias.add(transferenciaRecebida);
-            });
+            if (transferenciaRecebida != null) {
+              setState(() {
+                widget._transferencias.add(transferenciaRecebida);
+              });
+            }
           });
         },
         child: Icon(Icons.add),
