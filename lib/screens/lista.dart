@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class ListTransferencia extends StatefulWidget {
   final List<Transferencia> _transferencias = List();
 
+
   @override
   State<StatefulWidget> createState() {
     return ListaTransferenciaState();
