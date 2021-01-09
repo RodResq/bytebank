@@ -1,47 +1,37 @@
 import 'package:bytebank/models/transferencia.dart';
+import 'package:bytebank/models/transferencias.dart';
 import 'package:bytebank/screens/transferencia/formulario.dart';
 import 'package:flutter/material.dart';
-
-class ListTransferencia extends StatefulWidget {
-  final List<Transferencia> _transferencias = List();
+import 'package:provider/provider.dart';
 
 
-  @override
-  State<StatefulWidget> createState() {
-    return ListaTransferenciaState();
-  }
-}
-
-class ListaTransferenciaState extends State<ListTransferencia> {
+class ListaTransferencias extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Transferencias')),
-      body: ListView.builder(
-        itemCount: widget._transferencias.length,
-        itemBuilder: (context, indice) {
-          final transferencia = widget._transferencias[indice];
-          return ItemTransferencia(transferencia);
+      body: Consumer<Transferencias>(
+        builder: (context, transferencias, child) {
+          return ListView.builder(
+            itemCount: transferencias.lista().length,
+            itemBuilder: (context, indice) {
+              final transferencia = transferencias.lista()[indice];
+              return ItemTransferencia(transferencia);
+            },
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return FormularioTransferencia();
-          })).then((transferenciaRecebida) => _atualiza(transferenciaRecebida));
+          }));
         },
         child: Icon(Icons.add),
       ),
     );
   }
 
-  void _atualiza(transferenciaRecebida) {
-    if (transferenciaRecebida != null) {
-      setState(() {
-        widget._transferencias.add(transferenciaRecebida);
-      });
-    }
-  }
 }
 
 class ItemTransferencia extends StatelessWidget {
@@ -54,8 +44,8 @@ class ItemTransferencia extends StatelessWidget {
     return Card(
         child: ListTile(
       leading: Icon(Icons.monetization_on),
-      title: Text(this._transferencia.valor.toString()),
-      subtitle: Text(this._transferencia.numeroConta.toString()),
+      title: Text(this._transferencia.toStringValor()),
+      subtitle: Text(this._transferencia.toStringConta()),
     ));
   }
 }

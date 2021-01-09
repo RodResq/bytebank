@@ -6,6 +6,10 @@ class Transferencias extends ChangeNotifier {
 
   List<Transferencia> get transferencias => _transferencias;
 
+  lista() {
+    return transferencias;
+  }
+
   adiciona(Transferencia novaTransferencia) {
     _transferencias.add(novaTransferencia);
 
